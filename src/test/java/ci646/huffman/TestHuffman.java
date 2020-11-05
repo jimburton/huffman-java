@@ -87,7 +87,15 @@ public class TestHuffman {
 
             // Java chars take up two bytes each
             int inputSize = input.length()*2;
-            int codeSize = hc.getData().size() / 8;
+            int codeSize = 0;
+            //each entry in the Huffman code takes up one byte
+            //for the char plus however many bytes are needed to
+            //accommodate the code
+            for (char c: hc.getCode().keySet()) {
+                codeSize++;
+                codeSize += Math.max(1, hc.getCode().get(c).size() / 8);
+            }
+            codeSize = hc.getData().size() / 8;
             float comp = 100 - (((float) codeSize / inputSize) * 100);
             System.out.printf("[Compressed input from %d bytes to %d bytes, %4.2f%% compression]\n",
                     inputSize, codeSize, comp);
@@ -100,12 +108,13 @@ public class TestHuffman {
     @Test
     public void testSaveAndRead() {
         try {
-            String input = Files.readString(Path.of("etc/pg1459.txt"), StandardCharsets.ISO_8859_1);
+            String inputPath = "etc/pg1459.txt";
+            String input = Files.readString(Path.of(inputPath), StandardCharsets.ISO_8859_1);
             HuffmanCoding hc = Huffman.encode(input);
-            String path = "etc/pg1459.hc";
-            hc.save(path);
+            String outputPath = "etc/pg1459.hc";
+            hc.save(outputPath);
 
-            Optional<HuffmanCoding> hcOpt = HuffmanCoding.read(path);
+            Optional<HuffmanCoding> hcOpt = HuffmanCoding.read(outputPath);
             assertTrue(hcOpt.isPresent());
             HuffmanCoding hc2 = hcOpt.get();
             assertEquals(input, Huffman.decode(hc2.getCode(), hc2.getData()));
