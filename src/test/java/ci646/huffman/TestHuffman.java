@@ -21,20 +21,18 @@ public class TestHuffman {
 
     @Test
     public void testCodec() {
-        Huffman h = new Huffman();
         String input = "Oh I do like to be beside the seaside, I do like to be beside the sea";
-        HuffmanCoding hc = h.encode(input);
-        String decode = h.decode(hc.getCode(), hc.getData());
+        HuffmanCoding hc = Huffman.encode(input);
+        String decode = Huffman.decode(hc.getCode(), hc.getData());
         assertEquals(input, decode);
     }
 
     @Test
     public void testCompressBook() {
-        Huffman h = new Huffman();
         try {
             String input = Files.readString(Path.of("etc/pg1459.txt"), StandardCharsets.ISO_8859_1);
-            HuffmanCoding hc = h.encode(input);
-            String decode = h.decode(hc.getCode(), hc.getData());
+            HuffmanCoding hc = Huffman.encode(input);
+            String decode = Huffman.decode(hc.getCode(), hc.getData());
             assertEquals(input, decode);
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,10 +41,9 @@ public class TestHuffman {
 
     @Test
     public void compressionBenchmark() {
-        Huffman h = new Huffman();
         try {
             String input = Files.readString(Path.of("etc/pg1459.txt"), StandardCharsets.ISO_8859_1);
-            HuffmanCoding hc = h.encode(input);
+            HuffmanCoding hc = Huffman.encode(input);
             hc.save("etc/pg1459.hc");
 
             // Java chars take up two bytes each
@@ -63,17 +60,16 @@ public class TestHuffman {
 
     @Test
     public void testSaveAndRead() {
-        Huffman h = new Huffman();
         try {
             String input = Files.readString(Path.of("etc/pg1459.txt"), StandardCharsets.ISO_8859_1);
-            HuffmanCoding hc = h.encode(input);
+            HuffmanCoding hc = Huffman.encode(input);
             String path = "etc/pg1459.hc";
             hc.save(path);
 
             Optional<HuffmanCoding> hcOpt = HuffmanCoding.read(path);
             assertTrue(hcOpt.isPresent());
             HuffmanCoding hc2 = hcOpt.get();
-            assertEquals(input, h.decode(hc2.getCode(), hc2.getData()));
+            assertEquals(input, Huffman.decode(hc2.getCode(), hc2.getData()));
 
         } catch (IOException e) {
             e.printStackTrace();

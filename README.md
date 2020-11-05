@@ -1,1 +1,2 @@
-# huffman-java
+# Huffman coding
+

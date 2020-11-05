@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Huffman {
 
-    public HuffmanCoding encode(String input) {
+    public static HuffmanCoding encode(String input) {
         Map<Character, Integer> freqTable = buildFreqTable(input);
         Node tree = treeFromFreqTable(freqTable);
         Map<Character, List<Boolean>> code = buildCode(tree, new HashMap<>());
@@ -19,7 +19,7 @@ public class Huffman {
         return new HuffmanCoding(code, data);
     }
 
-    public String decode(Map<Character, List<Boolean>> table, List<Boolean> data) {
+    public static String decode(Map<Character, List<Boolean>> table, List<Boolean> data) {
         StringBuilder sb = new StringBuilder();
         Node tree = treeFromTable(table);
         Node n = tree;
@@ -35,7 +35,7 @@ public class Huffman {
         return sb.toString();
     }
 
-    private Node treeFromFreqTable(Map<Character, Integer> freqTable) {
+    private static Node treeFromFreqTable(Map<Character, Integer> freqTable) {
         Set<Character> chars = freqTable.keySet();
         PQueue queue = new PQueue();
 
@@ -52,7 +52,7 @@ public class Huffman {
         return queue.dequeue();
     }
 
-    public Node treeFromTable(Map<Character, List<Boolean>> table) {
+    public static Node treeFromTable(Map<Character, List<Boolean>> table) {
         Node root = new Branch(0, null, null);
         Node n;
         for(char c: table.keySet()) {
@@ -81,7 +81,7 @@ public class Huffman {
         return root;
     }
 
-    private Map<Character, Integer> buildFreqTable(String input) {
+    private static Map<Character, Integer> buildFreqTable(String input) {
         Map<Character, Integer> f = new HashMap<>();
         char[] strArray = input.toCharArray();
         for (char c : strArray) {
@@ -95,7 +95,7 @@ public class Huffman {
         return f;
     }
 
-    private Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
+    private static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
         tree.traverse(code, new ArrayList<>());
         return code;
     }
