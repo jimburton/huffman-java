@@ -35,7 +35,8 @@ public class Huffman {
         return sb.toString();
     }
 
-    private static Node treeFromFreqTable(Map<Character, Integer> freqTable) {
+    public static Node treeFromFreqTable(Map<Character, Integer> freqTable) {
+        if (freqTable == null) return null;
         Set<Character> chars = freqTable.keySet();
         PQueue queue = new PQueue();
 
@@ -81,7 +82,8 @@ public class Huffman {
         return root;
     }
 
-    private static Map<Character, Integer> buildFreqTable(String input) {
+    public static Map<Character, Integer> buildFreqTable(String input) {
+        if (input == null || input.isEmpty()) return null;
         Map<Character, Integer> f = new HashMap<>();
         char[] strArray = input.toCharArray();
         for (char c : strArray) {
@@ -95,7 +97,7 @@ public class Huffman {
         return f;
     }
 
-    private static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
+    public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
         tree.traverse(code, new ArrayList<>());
         return code;
     }
