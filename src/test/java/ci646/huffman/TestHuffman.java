@@ -1,6 +1,5 @@
 package ci646.huffman;
 
-import ci646.huffman.tree.Node;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,8 +7,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -75,10 +72,8 @@ public class TestHuffman {
 
             Optional<HuffmanCoding> hcOpt = HuffmanCoding.read(path);
             assertTrue(hcOpt.isPresent());
-            if (hcOpt.isPresent()) {
-                HuffmanCoding hc2 = hcOpt.get();
-                assertEquals(input, h.decode(hc2.getCode(), hc2.getData()));
-            }
+            HuffmanCoding hc2 = hcOpt.get();
+            assertEquals(input, h.decode(hc2.getCode(), hc2.getData()));
 
         } catch (IOException e) {
             e.printStackTrace();
