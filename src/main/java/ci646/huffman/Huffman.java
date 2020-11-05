@@ -8,6 +8,21 @@ import java.util.*;
 
 public class Huffman {
 
+    public static Map<Character, Integer> freqTable (String input) {
+        if (input == null || input.isEmpty()) return null;
+        Map<Character, Integer> ft = new HashMap<>();
+        char[] strArray = input.toCharArray();
+        for (char c : strArray) {
+            if (ft.containsKey(c)) {
+                ft.put(c, ft.get(c) + 1);
+            }
+            else {
+                ft.put(c, 1);
+            }
+        }
+        return ft;
+    }
+
     public static Node treeFromFreqTable(Map<Character, Integer> freqTable) {
         if (freqTable == null) return null;
         Set<Character> chars = freqTable.keySet();
@@ -26,12 +41,12 @@ public class Huffman {
         return queue.dequeue();
     }
 
-    public static Node treeFromTable(Map<Character, List<Boolean>> table) {
+    public static Node treeFromCode(Map<Character, List<Boolean>> code) {
         Node root = new Branch(0, null, null);
         Node n;
-        for(char c: table.keySet()) {
+        for(char c: code.keySet()) {
             n = root;
-            List<Boolean> bs = table.get(c);
+            List<Boolean> bs = code.get(c);
             for (int i=0;i<bs.size();i++) {
                 boolean b = bs.get(i);
                 boolean isLeaf = i == bs.size()-1;
@@ -55,21 +70,6 @@ public class Huffman {
         return root;
     }
 
-    public static Map<Character, Integer> freqTable (String input) {
-        if (input == null || input.isEmpty()) return null;
-        Map<Character, Integer> f = new HashMap<>();
-        char[] strArray = input.toCharArray();
-        for (char c : strArray) {
-            if (f.containsKey(c)) {
-                f.put(c, f.get(c) + 1);
-            }
-            else {
-                f.put(c, 1);
-            }
-        }
-        return f;
-    }
-
     public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
         tree.traverse(code, new ArrayList<>());
         return code;
@@ -88,7 +88,7 @@ public class Huffman {
 
     public static String decode(Map<Character, List<Boolean>> table, List<Boolean> data) {
         StringBuilder sb = new StringBuilder();
-        Node tree = treeFromTable(table);
+        Node tree = treeFromCode(table);
         Node n = tree;
         for (Boolean b: data) {
             if (n instanceof Branch) {

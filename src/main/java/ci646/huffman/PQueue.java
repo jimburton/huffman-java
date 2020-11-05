@@ -15,23 +15,19 @@ public class PQueue {
 
     public void enqueue(Node n) {
         int i=0;
-        for(; i< getQueue().size(); i++) {
-            Node m = getQueue().get(i);
+        for(; i< queue.size(); i++) {
+            Node m = queue.get(i);
             if (m.getFreq()>=n.getFreq()) break;
         }
-        getQueue().add(i,n);
+        queue.add(i,n);
     }
 
     public Node dequeue() {
-        if (getQueue().size()==0) return null;
-        return getQueue().remove(0);
+        if (queue.size()==0) return null;
+        return queue.remove(0);
     }
 
     public int size() {
-        return getQueue().size();
-    }
-
-    public List<Node> getQueue() {
-        return queue;
+        return queue.size();
     }
 }
