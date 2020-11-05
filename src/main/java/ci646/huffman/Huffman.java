@@ -8,33 +8,6 @@ import java.util.*;
 
 public class Huffman {
 
-    public static HuffmanCoding encode(String input) {
-        Map<Character, Integer> freqTable = buildFreqTable(input);
-        Node tree = treeFromFreqTable(freqTable);
-        Map<Character, List<Boolean>> code = buildCode(tree, new HashMap<>());
-        List<Boolean> data = new ArrayList<>();
-        for(int i=0;i<input.length();i++) {
-            data.addAll(code.get(input.charAt(i)));
-        }
-        return new HuffmanCoding(code, data);
-    }
-
-    public static String decode(Map<Character, List<Boolean>> table, List<Boolean> data) {
-        StringBuilder sb = new StringBuilder();
-        Node tree = treeFromTable(table);
-        Node n = tree;
-        for (Boolean b: data) {
-            if (n instanceof Branch) {
-                n = b ? ((Branch) n).getRight() : ((Branch) n).getLeft();
-            }
-            if (n instanceof Leaf) {
-                sb.append(((Leaf) n).getLabel());
-                n = tree;
-            }
-        }
-        return sb.toString();
-    }
-
     public static Node treeFromFreqTable(Map<Character, Integer> freqTable) {
         if (freqTable == null) return null;
         Set<Character> chars = freqTable.keySet();
@@ -82,7 +55,7 @@ public class Huffman {
         return root;
     }
 
-    public static Map<Character, Integer> buildFreqTable(String input) {
+    public static Map<Character, Integer> freqTable (String input) {
         if (input == null || input.isEmpty()) return null;
         Map<Character, Integer> f = new HashMap<>();
         char[] strArray = input.toCharArray();
@@ -100,5 +73,32 @@ public class Huffman {
     public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
         tree.traverse(code, new ArrayList<>());
         return code;
+    }
+
+    public static HuffmanCoding encode(String input) {
+        Map<Character, Integer> ft = freqTable(input);
+        Node tree = treeFromFreqTable(ft);
+        Map<Character, List<Boolean>> code = buildCode(tree, new HashMap<>());
+        List<Boolean> data = new ArrayList<>();
+        for(int i=0;i<input.length();i++) {
+            data.addAll(code.get(input.charAt(i)));
+        }
+        return new HuffmanCoding(code, data);
+    }
+
+    public static String decode(Map<Character, List<Boolean>> table, List<Boolean> data) {
+        StringBuilder sb = new StringBuilder();
+        Node tree = treeFromTable(table);
+        Node n = tree;
+        for (Boolean b: data) {
+            if (n instanceof Branch) {
+                n = b ? ((Branch) n).getRight() : ((Branch) n).getLeft();
+            }
+            if (n instanceof Leaf) {
+                sb.append(((Leaf) n).getLabel());
+                n = tree;
+            }
+        }
+        return sb.toString();
     }
 }

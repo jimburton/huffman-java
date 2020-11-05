@@ -18,10 +18,25 @@ public class TestHuffman {
     String input = "Oh I do like to be beside the seaside, I do like to be beside the sea";
 
     @Test
+    public void testPQueue() {
+        PQueue pq = new PQueue();
+        assertNull(pq.dequeue());
+        pq.enqueue(new Leaf('a', 42));
+        pq.enqueue(new Leaf('b', 1));
+        pq.enqueue(new Leaf('c', 101));
+        pq.enqueue(new Leaf('d', -101));
+        assertEquals(pq.size(), 4);
+        assertEquals(pq.dequeue().getFreq(), -101);
+        assertEquals(pq.dequeue().getFreq(), 1);
+        assertEquals(pq.dequeue().getFreq(), 42);
+        assertEquals(pq.dequeue().getFreq(), 101);
+    }
+
+    @Test
     public void testBuildFreqTable() {
-        assertNull(Huffman.buildFreqTable(null));
-        assertNull(Huffman.buildFreqTable(""));
-        Map<Character, Integer> hc = Huffman.buildFreqTable(input);
+        assertNull(Huffman.freqTable(null));
+        assertNull(Huffman.freqTable(""));
+        Map<Character, Integer> hc = Huffman.freqTable(input);
         // get a list of the unique chars in the input string
         List<Character> uniques = new ArrayList<>();
         for(int i=0;i<input.length();i++) {
@@ -36,13 +51,13 @@ public class TestHuffman {
 
     @Test
     public void testTreeFromFreqTable() {
-        assertNull(Huffman.treeFromFreqTable(Huffman.buildFreqTable("")));
+        assertNull(Huffman.treeFromFreqTable(Huffman.freqTable("")));
         // get a list of the unique chars in the input string
-        Node t = Huffman.treeFromFreqTable(Huffman.buildFreqTable("a"));
+        Node t = Huffman.treeFromFreqTable(Huffman.freqTable("a"));
         assertEquals(t.getFreq(), 1);
         assertTrue(t instanceof Leaf);
 
-        t = Huffman.treeFromFreqTable(Huffman.buildFreqTable("aaaabaac"));
+        t = Huffman.treeFromFreqTable(Huffman.freqTable("aaaabaac"));
         assertEquals(t.getFreq(), 8);
         assertEquals(((Branch)t).getLeft().getFreq(), 2); // 'b' and 'c'
         assertEquals(((Branch)t).getRight().getFreq(), 6); // 'a'
@@ -50,7 +65,7 @@ public class TestHuffman {
 
     @Test
     public void testBuildCode() {
-        Map<Character, Integer> freqTable = Huffman.buildFreqTable(input);
+        Map<Character, Integer> freqTable = Huffman.freqTable(input);
         Node tree = Huffman.treeFromFreqTable(freqTable);
         Map<Character, List<Boolean>> code = Huffman.buildCode(tree, new HashMap<>());
         for (char c: freqTable.keySet()) {
