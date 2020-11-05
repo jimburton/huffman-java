@@ -18,4 +18,6 @@ out/*
 
 target/*
 
+etc/*.hc
+
 
