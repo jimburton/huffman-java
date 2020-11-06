@@ -23,12 +23,7 @@ public class PQueue {
      * @param n
      */
     public void enqueue(Node n) {
-        int i=0;
-        for(; i< queue.size(); i++) {
-            Node m = queue.get(i);
-            if (m.getFreq()>=n.getFreq()) break;
-        }
-        queue.add(i,n);
+        throw new UnsupportedOperationException("Method not implemented");
     }
 
     /**
@@ -36,8 +31,7 @@ public class PQueue {
      * @return
      */
     public Node dequeue() {
-        if (queue.size()==0) return null;
-        return queue.remove(0);
+        throw new UnsupportedOperationException("Method not implemented");
     }
 
     /**
@@ -45,6 +39,6 @@ public class PQueue {
      * @return
      */
     public int size() {
-        return queue.size();
+        throw new UnsupportedOperationException("Method not implemented");
     }
 }

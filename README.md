@@ -50,7 +50,8 @@ tree.
 `enqueue` adds a node to the queue. The new node should be inserted at the point where the frequency of next node is
  greater than or equal to that of the new one. So work out where that is then use the `add` method of the `ArrayList`, 
  which takes a position at which to add the new object. The `dequeue` method simply removes the first node from the queue,
- for which you can use the `get` method of the `ArrayList`.
+ for which you can use the `get` method of the `ArrayList`. The `size` method returns
+ the size of the queue.
  
  2. Implement the `freqTable` method in `Huffman`. If the input to this method is `null`, return `null` straight away.
  Otherwise, create a new `map` like so:
@@ -96,7 +97,7 @@ tree.
  for an input string by calling the various methods written above. I.e. create the frequency table, use that to create 
  the Huffman tree then extract the code map of characters and their codes from the tree. Then to encode the input data, 
  loop through the input looking up each character in the map and add the code for that character to a list representing the 
- data.
+ data. Return the code and the data as an instance of the `HuffmanCoding` class.
  
  7. The final steps are about decoding data which has previously been encoded. The first step in this is to take a map
  of characters and their Huffman codes and use it to reconstruct a Huffman tree. Implement the `treeFromCode` method in

@@ -34,6 +34,6 @@ public class Leaf extends Node {
      */
     @Override
     public void traverse(Map<Character, List<Boolean>> map, List<Boolean> list) {
-        map.put(label, list);
+        throw new UnsupportedOperationException("Method not implemented");
     }
 }

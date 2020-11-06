@@ -29,15 +29,7 @@ public class Branch extends Node {
      * @param list
      */
     public void traverse(Map<Character, List<Boolean>> map, List<Boolean> list) {
-        // make a deep copy of the list and add false to it
-        ArrayList<Boolean> leftList = new ArrayList(list);
-        leftList.add(false);
-        // make a deep copy of the list and add true to it
-        List<Boolean> rightList = new ArrayList(list);
-        rightList.add(true);
-        // recursive call on the left and right children with the updated lists
-        getLeft().traverse(map, leftList);
-        getRight().traverse(map, rightList);
+        throw new UnsupportedOperationException("Method not implemented");
     }
 
     public Node getLeft() {
