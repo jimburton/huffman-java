@@ -1,7 +1,7 @@
 # Huffman coding
 
-In this extended lab exercise you will implement Huffman coding. This is an elegant 
-compression algorithm. The idea is to generate a binary sequence that represents each character 
+In this extended lab exercise you will implement the Huffman coding. This is a very elegant 
+and simple but powerful compression algorithm. The idea is to generate a binary sequence that represents each character 
 required. This might be the English alphabet, some subset of that, or any 
 collection of symbols. 
 
