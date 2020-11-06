@@ -69,6 +69,40 @@ public class Huffman {
     }
 
     /**
+     * Construct the map of characters and codes from a tree. Just pass the empty code map to the traverse
+     * method of the tree along with an empty list, then return the populated code map.
+     *
+     * @param tree
+     * @param code
+     * @return
+     */
+    public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
+        tree.traverse(code, new ArrayList<>());
+        return code;
+    }
+
+    /**
+     * Create the huffman coding for an input string by calling the various methods written above. I.e. create the
+     * frequency table, use that to create the Huffman tree then extract the code map of characters and their codes
+     * from the tree. Then to encode the input data, loop through the input looking each character in the map and add
+     * the code for that character to a list representing the data.
+     *
+     * @param input
+     * @return
+     */
+    public static HuffmanCoding encode(String input) {
+        Map<Character, Integer> ft = freqTable(input);
+        Node tree = treeFromFreqTable(ft);
+        Map<Character, List<Boolean>> code = buildCode(tree, new HashMap<>());
+        // build the data
+        List<Boolean> data = new ArrayList<>();
+        for(int i=0;i<input.length();i++) {
+            data.addAll(code.get(input.charAt(i)));
+        }
+        return new HuffmanCoding(code, data);
+    }
+
+    /**
      * Reconstruct a Huffman tree from the map of characters and their codes. Only the structure of this tree
      * is required and frequency labels of all nodes can be set to zero.
      *
@@ -123,39 +157,6 @@ public class Huffman {
         return root;
     }
 
-    /**
-     * Construct the map of characters and codes from a tree. Just pass the empty code map to the traverse
-     * method of the tree along with an empty list, then return the populated code map.
-     *
-     * @param tree
-     * @param code
-     * @return
-     */
-    public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
-        tree.traverse(code, new ArrayList<>());
-        return code;
-    }
-
-    /**
-     * Create the huffman coding for an input string by calling the various methods written above. I.e. create the
-     * frequency table, use that to create the Huffman tree then extract the code map of characters and their codes
-     * from the tree. Then to encode the input data, loop through the input looking each character in the map and add
-     * the code for that character to a list representing the data.
-     *
-     * @param input
-     * @return
-     */
-    public static HuffmanCoding encode(String input) {
-        Map<Character, Integer> ft = freqTable(input);
-        Node tree = treeFromFreqTable(ft);
-        Map<Character, List<Boolean>> code = buildCode(tree, new HashMap<>());
-        // build the data
-        List<Boolean> data = new ArrayList<>();
-        for(int i=0;i<input.length();i++) {
-            data.addAll(code.get(input.charAt(i)));
-        }
-        return new HuffmanCoding(code, data);
-    }
 
     /**
      * Decode some data using a map of characters and their codes. To do this you need to reconstruct the tree from the
