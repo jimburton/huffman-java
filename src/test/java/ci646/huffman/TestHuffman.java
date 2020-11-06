@@ -103,12 +103,13 @@ public class TestHuffman {
             // Java chars take up two bytes each
             int inputSize = input.length()*2;
             int codeSize = 0;
-            //each entry in the Huffman code takes up one byte
-            //for the char plus however many bytes are needed to
-            //accommodate the code
+            // each entry in the Huffman code takes up one byte
+            // for the char plus one byte for the length of the code plus
+            // however many bits are needed to
+            // accommodate the code
             for (char c: hc.getCode().keySet()) {
-                codeSize++;
-                codeSize += Math.max(1, hc.getCode().get(c).size() / 8);
+                codeSize += 2;
+                codeSize += hc.getCode().get(c).size();
             }
             codeSize = hc.getData().size() / 8;
             float comp = 100 - (((float) codeSize / inputSize) * 100);
