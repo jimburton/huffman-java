@@ -1,4 +1,8 @@
 package ci646.huffman;
+/**
+ * A priority queue of Node objects. Each node has a frequency -- the queue orders objects
+ * in descending order of frequency, i.e. lowest first.
+ */
 
 import ci646.huffman.tree.Node;
 
@@ -13,6 +17,10 @@ public class PQueue {
         queue = new ArrayList<>();
     }
 
+    /**
+     * Add a node to the queue.
+     * @param n
+     */
     public void enqueue(Node n) {
         int i=0;
         for(; i< queue.size(); i++) {
@@ -22,11 +30,19 @@ public class PQueue {
         queue.add(i,n);
     }
 
+    /**
+     * Remove a node from the queue.
+     * @return
+     */
     public Node dequeue() {
         if (queue.size()==0) return null;
         return queue.remove(0);
     }
 
+    /**
+     * Return the size of the queue.
+     * @return
+     */
     public int size() {
         return queue.size();
     }

@@ -1,4 +1,10 @@
 package ci646.huffman;
+/**
+ * A class to contain the details of a Huffman coding, i.e. the mapping from
+ * characters to binary sequences and the binary data itself. This class is
+ * Serializable so objects can be written to file and read back in using the
+ * `save' and `read' methods.
+ */
 
 import java.io.*;
 import java.util.List;

@@ -1,6 +1,10 @@
 package ci646.huffman.tree;
+/**
+ * The parent class of nodes in a Huffman tree.
+ */
 
-import java.io.PrintStream;
+import ci646.huffman.util.TreePrinter;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,95 +23,20 @@ public abstract class Node {
         this.freq = freq;
     }
 
+    /**
+     * The traverse method is used to construct the map of characters (stored in leaves of the tree)
+     * and binary codes (representing the paths from the root to the leaves). In the branch class this method
+     * should be called recursively on the left and right children of the branch, adding `false` to the list
+     * of booleans passed to the left child and `true` to the list of booleans passed to the right. In the Leaf class
+     * the method should store the pair of the character (the label of the leaf) and the list of booleans (the path
+     * to that leaf) in the map.
+     * @param map
+     * @param list
+     */
     public abstract void traverse(Map<Character, List<Boolean>> map, List<Boolean> list);
 
-    /*
-    Helper methods for printing trees from https://www.baeldung.com/java-print-binary-tree-diagram
-     */
-
     public String toString() {
-        return traversePreOrder(this);
+        return TreePrinter.traversePreOrder(this);
     }
 
-    public static String traversePreOrder(Node root) {
-
-        if (root == null) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(root.getFreq());
-
-        if (root instanceof Branch) {
-            String pointerRight = "└──";
-            String pointerLeft = (((Branch) root).getRight() != null) ? "├──" : "└──";
-
-            traverseNodes(sb, "", pointerLeft, ((Branch) root).getLeft(), ((Branch) root).getRight() != null);
-            traverseNodes(sb, "", pointerRight, ((Branch) root).getRight(), false);
-        }
-        sb.append("\n");
-        return sb.toString();
-    }
-
-    public static void traverseNodes(StringBuilder sb, String padding, String pointer, Node node,
-                                     boolean hasRightSibling) {
-        if (node != null) {
-            sb.append("\n");
-            sb.append(padding);
-            sb.append(pointer);
-            sb.append(node.getFreq());
-            if (node instanceof Leaf) {
-                sb.append(":"+((Leaf) node).getLabel());
-            }
-
-            StringBuilder paddingBuilder = new StringBuilder(padding);
-            if (hasRightSibling) {
-                paddingBuilder.append("│  ");
-            } else {
-                paddingBuilder.append("   ");
-            }
-
-            String paddingForBoth = paddingBuilder.toString();
-            String pointerRight = "└──";
-            boolean hasRight = !(node instanceof Leaf) && ((Branch) node).getRight() != null;
-            String pointerLeft = hasRight ? "├──" : "└──";
-
-            if (!(node instanceof Leaf)) {
-                traverseNodes(sb, paddingForBoth, pointerLeft, ((Branch) node).getLeft(), ((Branch) node).getRight() != null);
-                traverseNodes(sb, paddingForBoth, pointerRight, ((Branch) node).getRight(), false);
-            }
-        }
-    }
-
-    public static void printTree(PrintStream os, Node tree) {
-        os.print(traversePreOrder(tree));
-    }
-
-    /*
-    Two BST trees are equal if they have the same contents in the same structure.
-     */
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-
-        if (!(o instanceof Node)) {
-            return false;
-        }
-        Node that = (Node) o;
-        if (this.getFreq() != that.getFreq()) {
-            return false;
-        }
-        if (this instanceof Leaf && that instanceof Leaf && ((Leaf) this).getLabel() != ((Leaf) that).getLabel())
-            return false;
-        if (this instanceof Branch && that instanceof Branch) {
-            if (((Branch) this).getLeft() != null && !((Branch) this).getLeft().equals(((Branch) that).getLeft())) {
-                return false;
-            }
-            if (((Branch) this).getRight() != null && !((Branch) this).getRight().equals(((Branch) that).getRight())) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
