@@ -61,22 +61,22 @@ tree.
     ``` 
     
     This is a map from characters to integers, representing the frequency of each character in the input string. 
-    Loop through the input string. For each character, if it is already in the map add one to the count associated
-    with it. If it is not in the map, add a new entry with the count set to 1. Some methods from `Map` you will find
+    Loop through the input string. For each character, if it is already in the map update its entry in the map by adding one to
+    it. If this character is not in the map, add a new entry for it with the count set to 1. Some methods from `Map` you will find
     useful are `containsKey`, `get` and `put`.
     
     At this point, you should be able to make one of the tests pass.
     
  3. Implement the `treeFromFreqTable` method, which constructs a Huffman tree from a frequency table. First, create an 
- empty priority queue. Then make every entry in the frequency table into a leaf node and add it to the queue. Next, take 
+ empty priority queue. Then make a leaf node for every entry in the frequency table and add it to the queue. Next, take 
  the first two nodes from the queue and combine them in a branch node that is labelled by the combined frequency of the 
  nodes and put it back in the queue. Do this repeatedly until there is a single node in the queue, which is the Huffman 
  tree.
  
  4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method populates a map of characters and 
  their Huffman codes from a Huffman tree. In the branch class this method should call itself recursively on the left and 
- right children of the branch, passing new lists to each method call. You need to add `false` to the list passed to the 
- left-hand child, and `true` to the list passed to the right, representing the path being taken. It is essential that these lists are *deep copies* of the original list,
+ right children of the branch, passing new lists to each recursive call to `traverse`. You need to add `false` to the list passed to the 
+ method call on the left-hand child, and `true` to the list passed to the right. These lists of booleans represent the path being taken. It is essential that the lists passed to the recursive calls are *deep copies* of the original list,
  not references (or aliases) to the same list -- otherwise changes to either list will show up in all lists. The easiest way to make
  a deep copy is by using the constructor of `ArrayList` that takes a list as an argument. For example:
  
@@ -107,12 +107,12 @@ tree.
      Your tree will start as a single Branch node with null children. Make a local 
      variable referring to the root of this tree.
                            
-     Then for each character key in the code, `c`, take the list of booleans, `bs`, corresponding to `c`. For every 
+     Then for each character key, `c`, in the code take the list of booleans, `bs`, corresponding to `c`. For every 
      boolean, `b`, in `bs`, if `b` is `false` you want to "go 
      left" in the tree, otherwise "go right".
                            
-     Presume `b` is false, so you want to go left. So long as you are not at the end of the code you just want 
-     to set the 
+     Presume `b` is false, so you want to go left. So long as you are not at the end of the code (i.e. `b` is not the
+     last element in `bs`) you just want to set the local variable that points to the 
      current node to be the left-hand child of the node you are currently on, but you may need
      to create that child first. So, if that child does not yet exist (i.e. 
      it is null) you need to add a new branch node there. Then carry on with the next entry in `bs`, again
