@@ -47,6 +47,7 @@ public class TestHuffman {
             assertTrue(hc.containsKey(input.charAt(i)));
         }
         assertEquals((long) hc.get('I'), 2);
+        assertEquals((long) hc.get('d'), 5);
     }
 
     @Test
