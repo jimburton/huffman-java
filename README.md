@@ -1,6 +1,6 @@
 # Huffman coding
 
-In this extended lab exercise you will implement the Huffman coding. This is a very elegant 
+In this assignment you will implement the Huffman coding. This is a very elegant 
 and simple but powerful compression algorithm. The idea is to generate a binary sequence that represents each character 
 required. This might be the English alphabet, some subset of that, or any 
 collection of symbols. 
@@ -17,8 +17,9 @@ just 28KB.
 
 ![Fixed and variable length codes](etc/images/codes.png)
 
-We can create these variable-length codes using a binary tree (not
-a search tree). In a Huffman Tree the leaves contain the data, a
+It should be clear that in order to decode a stream of variable-length codes, no code should be a prefix of any other. 
+We can create the variable-length codes using a binary tree (not
+a search tree) called a *Huffman Tree*. In a Huffman Tree the leaves contain the data, which is a
 character and its frequency. Internal nodes are labelled with the
 combined frequencies of their children.
 
@@ -32,19 +33,18 @@ and so on.
 
 The most elegant part of this scheme is the algorithm used to create the tree:
 
-1. Make a tree node object for each character, with an extra label
+1. Use the frequency table to make a leaf node object for each character, including a label
 for its frequency.
 2. Put these nodes in a priority queue, where the lowest
 frequency has highest priority.
 3. Repeatedly:
     - Remove two nodes from the queue and insert them as children
-to a new node. The char label of the new node is blank and
-the frequency label is the sum of the labels of its children.
+to a new branch node. The new node is labelled by the sum of the frequency labels of its children.
     - Put the new node back in the queue.
     - When there is only one item in the queue, that's the Huffman
 tree.
 
-## Exercises
+## Problems
 
 1. First, implement the *priority queue* in the class `PQueue`. The data in the queue is stored in an `ArrayList`. The 
 `enqueue` method adds a node to the queue. The new node should be inserted at the point where the frequency of next node is
@@ -61,9 +61,9 @@ tree.
     ``` 
     
     This is a map from characters to integers, representing the frequency of each character in the input string. 
-    Loop through the input string. For each character, if it is already in the map update its entry in the map by adding one to
-    it. If this character is not in the map, add a new entry for it with the count set to 1. Some methods from `Map` you will find
-    useful are `containsKey`, `get` and `put`.
+    Loop through the input string. For each character, if it is already in the map update its entry in the map by 
+    adding one to it. If this character is not in the map, add a new entry for it with the count set to 1. Some 
+    methods from `Map` you will find useful are `containsKey`, `get` and `put`.
     
     At this point, you should be able to make one of the tests pass.
     
@@ -75,10 +75,12 @@ tree.
  
  4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method populates a map of characters and 
  their Huffman codes from a Huffman tree. In the branch class this method should call itself recursively on the left and 
- right children of the branch, passing new lists to each recursive call to `traverse`. You need to add `false` to the list passed to the 
- method call on the left-hand child, and `true` to the list passed to the right. These lists of booleans represent the path being taken. It is essential that the lists passed to the recursive calls are *deep copies* of the original list,
- not references (or aliases) to the same list -- otherwise changes to either list will show up in all lists. The easiest way to make
- a deep copy is by using the constructor of `ArrayList` that takes a list as an argument. For example:
+ right children of the branch. The recursive calls to `traverse` each take a reference to the map and a new (different) 
+    list. You need to add `false` to the list passed to the method call on the left-hand child, and `true` to the list 
+    passed to the right. These lists of booleans represent the path being taken. It is essential that the lists passed 
+    to the recursive calls are *deep copies* of the original list, not references (or aliases) to the same list -- 
+    otherwise changes to either list will show up in all lists. The easiest way to make a deep copy is by using the 
+    constructor of `ArrayList` that takes a list as an argument. For example:
  
     ```
     // make a deep copy of the list and add false to it
@@ -96,8 +98,8 @@ tree.
  6. Now you have everything you need to complete the `encode` method in the `Huffman` class. Create the Huffman coding 
  for an input string by calling the various methods written above. I.e. create the frequency table, use that to create 
  the Huffman tree then extract the code map of characters and their codes from the tree. Then to encode the input data, 
- loop through the input string looking up each character in the map and add the code for that character to a list representing the 
- data. Return the code and the data as an instance of the `HuffmanCoding` class.
+ loop through the input string looking up each character in the map and add the code for that character to a list 
+    representing the data. Return the code and the data as an instance of the `HuffmanCoding` class.
  
  7. The final steps are about decoding data which has previously been encoded. The first step in this is to take a map
  of characters and their Huffman codes and use it to reconstruct a Huffman tree. Implement the `treeFromCode` method in
@@ -118,9 +120,9 @@ tree.
      it is null) you need to add a new branch node there. Then carry on with the next entry in `bs`, again
      following the left or right-hand path as necessary.
                            
-     If you have reached the end of this code (i.e. `b` is the final element in `bs`), add a leaf node labelled by `c` as 
-     the left-hand child of the current node (right-hand if `b` is true). Then take the next char from the code and repeat 
-     the process, starting again at the root of the tree.
+     If you have reached the end of this code (i.e. `b` is the final element in `bs`), add a leaf node labelled by `c` 
+    as the left-hand child of the current node (right-hand if `b` is true). Then take the next char from the code and 
+    repeat the process, starting again at the root of the tree.
      
  8. Finally, implement the `decode` method in the `Huffman` class. First, reconstruct the tree using the `treeFromCode`
  method. Then take one boolean at a time from the data and use it to traverse the tree by going left for `false`, right 
