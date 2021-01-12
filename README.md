@@ -5,7 +5,7 @@ and simple but powerful compression algorithm. The idea is to generate a binary 
 required. This might be the English alphabet, some subset of that, or any 
 collection of symbols. 
 
-Say we have a 100KB file made up of repetitions of the letters "a" to "f".
+Say we have a 100KB file made up of repetitions of the letters 'a' to 'f'.
 We start by creating a frequency table:
 
 ![Frequency table](etc/images/ftable.png)
@@ -13,13 +13,14 @@ We start by creating a frequency table:
 If we use a fixed-length code we can encode this data in about
 37.5KB. If we use a variable-length code and assign the shortest
 code to the most frequently used characters, we can encode it in
-just 28KB.
+just 28KB. (Note that in the table below the code for each character is made up of the *bits* 1 and 0, not made 
+the *characters*, each of which occupies at least 8 bits depending on the encoding.)
 
 ![Fixed and variable length codes](etc/images/codes.png)
 
 It should be clear that in order to decode a stream of variable-length codes, no code should be a prefix of any other. 
 We can create the variable-length codes using a binary tree (not
-a search tree) called a *Huffman Tree*. In a Huffman Tree the leaves contain the data, which is a
+a search tree) called a *Huffman tree*. In a Huffman tree the leaves contain the data, which is a
 character and its frequency. Internal nodes are labelled with the
 combined frequencies of their children.
 
@@ -29,13 +30,13 @@ To decode data we go start at the root and go left for 0, and right
 for 1 until we get to a leaf. So, to decode `0101100`, we start at the root and
 after consuming a single digit from the code, `0`, we reach a leaf labelled `a`. We return 
 to the root and take digits from the code until we reach another leaf, which is labelled `b`,
-and so on.
+and so on, eventually decoding the whole string `abc`.
 
 The most elegant part of this scheme is the algorithm used to create the tree:
 
 1. Use the frequency table to make a leaf node object for each character, including a label
 for its frequency.
-2. Put these nodes in a priority queue, where the lowest
+2. Put these nodes in a *priority queue*, where the lowest
 frequency has highest priority.
 3. Repeatedly:
     - Remove two nodes from the queue and insert them as children
@@ -79,7 +80,7 @@ tree.
     list. You need to add `false` to the list passed to the method call on the left-hand child, and `true` to the list 
     passed to the right. These lists of booleans represent the path being taken. It is essential that the lists passed 
     to the recursive calls are *deep copies* of the original list, not references (or aliases) to the same list -- 
-    otherwise changes to either list will show up in all lists. The easiest way to make a deep copy is by using the 
+    otherwise changes to either list will show up in all copies. The easiest way to make a deep copy is by using the 
     constructor of `ArrayList` that takes a list as an argument. For example:
  
     ```
