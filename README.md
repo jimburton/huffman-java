@@ -46,7 +46,7 @@ tree.
 
 ## Problems
 
-1. First, implement the *priority queue* in the class `PQueue`. The data in the queue is stored in an `ArrayList`. The 
+1. First, implement the *priority queue* in the class `PQueue`. (**NB:** you need to implement the priority queue *yourself*. You will not be given any credit for importing and using a class such as `java.util.PriorityQueue`.) The data in the queue is stored in an `ArrayList`. The 
 `enqueue` method adds a node to the queue. The new node should be inserted at the point where the frequency of next node is
  greater than or equal to that of the new one. So work out where that is, then use the `add` method of the `ArrayList` class, 
  which takes a position at which to add the new object. The `dequeue` method simply removes the first node from the queue,
