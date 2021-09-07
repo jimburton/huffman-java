@@ -51,15 +51,14 @@ tree.
 
 ## Problems
 
-Before starting the work you should read and understand the code in the package 
-`huffman.tree`. This code represents a binary Huffman tree made up of *branch* nodes
-and *leaf* nodes. Because it is a Huffman tree, each branch node is labelled with an
-`int`, whereas leaf nodes have two labels, an `int` and a `char`. 
-
-The `Node` class is an abstract class which is the *superclass* of
-the classes `Branch` and `Leaf`. `Node` contains the implementation of several methods 
-that are common to any subclass (`getFreq`, `setFreq` and `toString`) and one that
-will be implemented differently in branches and leaves: `traverse`.
+Before starting the work you should read and understand the code provided. Pay
+attention to the code in the package `huffman.tree`. This code represents a binary 
+Huffman tree made up of *branch* nodes and *leaf* nodes. Because it is a Huffman tree,
+each branch node is labelled with an `int`, whereas leaf nodes have two labels, an 
+`int` and a `char`. The `Node` class is an abstract class which is the *superclass* 
+of the classes `Branch` and `Leaf`. `Node` contains the implementation of several 
+methods that are common to any subclass (`getFreq`, `setFreq` and `toString`) and 
+one that will be implemented differently in branches and leaves: `traverse`.
 
 1. First, implement the *priority queue* in the class
 `PQueue`. (**NB:** you need to implement the priority queue
@@ -97,14 +96,16 @@ queue, for which you can use the `get` method of `ArrayList`. The
  nodes and put it back in the queue. Do this repeatedly until there is a single node in the queue, which is the Huffman 
  tree.
  
-4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method populates a map of characters and 
+4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method creates a map of characters and 
  their Huffman codes from a Huffman tree. In the branch class this method should call itself recursively on the left and 
- right children of the branch. The recursive calls to `traverse` each take a reference to the map and a new (different) 
-   list. You need to add `false` to the list passed to the method call on the left-hand child, and `true` to the list 
-   passed to the right. These lists of booleans represent the path being taken. It is essential that the lists passed 
-   to the recursive calls are *deep copies* of the original list, not references (or aliases) to the same list -- 
-   otherwise changes to either list will show up in all copies. The easiest way to make a deep copy is by using the 
-   constructor of `ArrayList` that takes a list as an argument. For example:
+ right children of the branch. Each recursive calls returns a map, and you should return the result of *merging* the two
+into a single map. There are several ways of doing this, the simplest of which is probably the `putAll` method of `Map`. 
+
+   The recursive calls to `traverse` each take a new (different) list. You need to add `false` to the list passed to the 
+method call on the left-hand child, and `true` to the list passed to the right. These lists of booleans represent the 
+path being taken. It is essential that the lists passed to the recursive calls are *deep copies* of the original list, 
+not references (aliases) to the same list -- otherwise changes to either list will show up in all copies. The easiest 
+way to make a deep copy is by using the constructor of `ArrayList` that takes a list as an argument. For example:
  
    ```
    // make a deep copy of the list and add false to it
@@ -112,8 +113,14 @@ queue, for which you can use the `get` method of `ArrayList`. The
    leftList.add(false);
    ```
  
-    In the `Leaf` class the method should store the pair of the character (the label of the leaf) and the list of 
-    booleans (the path to that leaf) in the map.
+    In the `Leaf` class the method should create a new map, store the pair of the character (the label of the leaf) 
+and the list of booleans (the path to that leaf) in the map, then return it. The return type of `traverse` is `Map`, but
+this is an *interface*. In order to actually create a `Map` you have to choose one of the several classes that implement
+that interface, e.g. `java.util.HashMap`, as below:
+
+    ```
+    Map<Character, List<Boolean>> map = new HashMap<>();
+    ```
      
 5. Implement the `buildCode` method in the `Huffman` class. This method constructs the map of characters and codes 
  from a tree. It takes as parameters the tree and an empty code map. Just pass the map to the `traverse` method 

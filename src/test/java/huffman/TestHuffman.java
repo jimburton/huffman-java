@@ -68,7 +68,7 @@ public class TestHuffman {
     public void testBuildCode() {
         Map<Character, Integer> freqTable = Huffman.freqTable(input);
         Node tree = Huffman.treeFromFreqTable(freqTable);
-        Map<Character, List<Boolean>> code = Huffman.buildCode(tree, new HashMap<>());
+        Map<Character, List<Boolean>> code = Huffman.buildCode(tree);
         for (char c: freqTable.keySet()) {
             assertTrue(code.containsKey(c));
         }

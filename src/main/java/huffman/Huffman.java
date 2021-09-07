@@ -39,15 +39,14 @@ public class Huffman {
     }
 
     /**
-     * Construct the map of characters and codes from a tree. Just pass the empty code map to the traverse
-     * method of the tree along with an empty list, then return the populated code map.
+     * Construct the map of characters and codes from a tree. Just call the traverse
+     * method of the tree passing in an empty list, then return the populated code map.
      *
      * @param tree  The Huffman tree.
-     * @param code  An empty map.
      * @return      The populated map, where each key is a character, c, that maps to a list of booleans
      *              representing the path through the tree from the root to the leaf node labelled c.
      */
-    public static Map<Character, List<Boolean>> buildCode(Node tree, Map<Character, List<Boolean>> code) {
+    public static Map<Character, List<Boolean>> buildCode(Node tree) {
         throw new UnsupportedOperationException("Method not implemented");
     }
 
