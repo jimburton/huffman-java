@@ -112,7 +112,7 @@ public class TestHuffman {
                 codeSize += 2;
                 codeSize += hc.getCode().get(c).size();
             }
-            codeSize = hc.getData().size() / 8;
+            codeSize += hc.getData().size() / 8;
             float comp = 100 - (((float) codeSize / inputSize) * 100);
             System.out.printf("[Compressed input from %d bytes to %d bytes, %4.2f%% compression]\n",
                     inputSize, codeSize, comp);
