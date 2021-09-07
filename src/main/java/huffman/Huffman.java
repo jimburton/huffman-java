@@ -27,7 +27,8 @@ public class Huffman {
      * Then make every entry in the frequency table into a leaf node and add it to the queue.
      *
      * Then, take the first two nodes from the queue and combine them in a branch node that is
-     * labelled by the combined frequency of the nodes and put it back in the queue.
+     * labelled by the combined frequency of the nodes and put it back in the queue. The right hand
+     * child of the new branch node should be the node with the larger frequency of the two.
      *
      * Do this repeatedly until there is a single node in the queue, which is the Huffman tree.
      *

@@ -93,8 +93,9 @@ queue, for which you can use the `get` method of `ArrayList`. The
 3. Implement the `treeFromFreqTable` method, which constructs a Huffman tree from a frequency table. First, create an 
  empty priority queue. Then make a leaf node for every entry in the frequency table and add it to the queue. Next, take 
  the first two nodes from the queue and combine them in a branch node that is labelled by the combined frequency of the 
- nodes and put it back in the queue. Do this repeatedly until there is a single node in the queue, which is the Huffman 
- tree.
+ nodes and put it back in the queue. The right child of the new branch node should be the node with the larger frequency
+ of the two (presuming one of the labels is larger than the other -- if not, it doesn't matter which is which). Do this 
+ repeatedly until there is a single node in the queue, which is the Huffman tree.
  
 4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method creates a map of characters and 
  their Huffman codes from a Huffman tree. In the branch class this method should call itself recursively on the left and 
