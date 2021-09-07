@@ -60,6 +60,8 @@ public class TestHuffman {
 
         t = Huffman.treeFromFreqTable(Huffman.freqTable("aaaabaac"));
         assertEquals(t.getFreq(), 8);
+        // the frequency of the right child should be greater than or equal to the
+        // frequency of the left child.
         assertEquals(((Branch)t).getLeft().getFreq(), 2); // 'b' and 'c'
         assertEquals(((Branch)t).getRight().getFreq(), 6); // 'a'
     }
