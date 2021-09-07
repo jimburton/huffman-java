@@ -1,8 +1,8 @@
-package ci646.huffman.util;
+package huffman.util;
 
-import ci646.huffman.tree.Branch;
-import ci646.huffman.tree.Leaf;
-import ci646.huffman.tree.Node;
+import huffman.tree.Branch;
+import huffman.tree.Leaf;
+import huffman.tree.Node;
 
 import java.io.PrintStream;
 

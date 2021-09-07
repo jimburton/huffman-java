@@ -1,12 +1,12 @@
-package ci646.huffman;
+package huffman;
 
-import ci646.huffman.tree.Node;
+import huffman.tree.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 /**
- * A priority queue of Node objects. Each node has a frequency -- the queue orders objects
- * in descending order of frequency, i.e. lowest first.
+ * A priority queue of @Node@ objects. Each node has an int as its label representing its frequency.
+ * The queue should order objects in ascending order of frequency, i.e. lowest first.
  */
 public class PQueue {
 
@@ -18,7 +18,7 @@ public class PQueue {
 
     /**
      * Add a node to the queue. The new node should be inserted at the point where the frequency of next node is
-     * greater than or equal to that of the new one.
+     * greater than or equal to that of the next one.
      * @param n The node to enqueue.
      */
     public void enqueue(Node n) {

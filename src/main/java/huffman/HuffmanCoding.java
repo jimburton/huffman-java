@@ -1,4 +1,4 @@
-package ci646.huffman;
+package huffman;
 
 import java.io.*;
 import java.util.List;

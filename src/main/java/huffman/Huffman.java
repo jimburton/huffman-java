@@ -1,8 +1,6 @@
-package ci646.huffman;
+package huffman;
 
-import ci646.huffman.tree.Branch;
-import ci646.huffman.tree.Leaf;
-import ci646.huffman.tree.Node;
+import huffman.tree.Node;
 
 import java.util.*;
 /**
