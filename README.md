@@ -98,8 +98,8 @@ queue, for which you can use the `get` method of `ArrayList`. The
  repeatedly until there is a single node in the queue, which is the Huffman tree.
  
 4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method creates a map of characters and 
- their Huffman codes from a Huffman tree. In the branch class this method should call itself recursively on the left and 
- right children of the branch. Each recursive calls returns a map, and you should return the result of *merging* the two
+ their Huffman codes from a Huffman tree. In the `Branch` class this method should call itself recursively on the left and 
+ right children of the branch. Each of these calls returns a map, and you should return the result of *merging* the two
 into a single map. There are several ways of doing this, the simplest of which is probably the `putAll` method of `Map`. 
 
    The recursive calls to `traverse` each take a new (different) list. You need to add `false` to the list passed to the 
@@ -143,18 +143,18 @@ of the tree and return the result.
                            
     Then for each character key, `c`, in the code take the list of booleans, `bs`, corresponding to `c`. For every 
     boolean, `b`, in `bs`, if `b` is `false` you want to "go 
-    left" in the tree, otherwise "go right".
+    left" (i.e. construct a path in the tree that goes left), otherwise "go right".
                            
     Presume `b` is false, so you want to go left. So long as you are not at the end of the code (i.e. `b` is not the
     last element in `bs`) you just want to set the local variable that points to the 
     current node to be the left-hand child of the node you are currently on, but you may need
     to create that child first. So, if that child does not yet exist (i.e. 
-    it is null) you need to add a new branch node there. Then carry on with the next entry in `bs`, again
-    following the left or right-hand path as necessary.
+    it is null) you need to add a new branch node with null children there. Then carry on with the next entry in `bs`, 
+    again following the left or right-hand path as necessary.
                            
-    If you have reached the end of this code (i.e. `b` is the final element in `bs`), add a leaf node labelled by `c` 
-   as the left-hand child of the current node (right-hand if `b` is true). Then take the next char from the code and 
-   repeat the process, starting again at the root of the tree.
+    If you have reached the end of this part of the code (i.e. `b` is the final element in `bs`), add a leaf node 
+    labelled by `c` as the left-hand child of the current node (right-hand if `b` is true). Then take the next char 
+    from the code and repeat the process, starting again at the root of the tree.
      
 8. Finally, implement the `decode` method in the `Huffman` class. First, reconstruct the tree using the `treeFromCode`
  method. Then take one boolean at a time from the data and use it to traverse the tree by going left for `false`, right 
