@@ -123,8 +123,8 @@ that interface, e.g. `java.util.HashMap`, as below:
     ```
      
 5. Implement the `buildCode` method in the `Huffman` class. This method constructs the map of characters and codes 
- from a tree. It takes as parameters the tree and an empty code map. Just pass the map to the `traverse` method 
-of the tree along with an empty list, then return the populated code map. 
+ from a tree. It takes a tree as its parameter. Call the `traverse` method 
+of the tree and return the result. 
  
 6. Now you have everything you need to complete the `encode` method in the `Huffman` class. Create the Huffman coding 
  for an input string by calling the various methods written above. I.e. create the frequency table, use that to create 
