@@ -100,7 +100,7 @@ queue, for which you can use the `get` method of `ArrayList`. The
 4. Implement the `traverse` method in the `Branch` and `Leaf` classes. This method creates a map of characters and 
  their Huffman codes from a Huffman tree. In the `Branch` class this method should call itself recursively on the left and 
  right children of the branch. Each of these calls returns a map, and you should return the result of *merging* the two
-into a single map. There are several ways of doing this, the simplest of which is probably the `[https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html#putAll-java.util.Map-](putAll)` method of `Map`. 
+into a single map. There are several ways of doing this, the simplest of which is probably the `(https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html#putAll-java.util.Map-)[putAll]` method of `Map`. 
 
    The recursive calls to `traverse` each take a new (different) list. You need to add `false` to the list passed to the 
 method call on the left-hand child, and `true` to the list passed to the right. These lists of booleans represent the 
