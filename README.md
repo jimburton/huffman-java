@@ -161,21 +161,18 @@ of the tree and return the result.
     ```
     procedure treeFromCode(code): -- code is a map from characters to lists of booleans (representing bits)
       root <- NEW BRANCH NODE WITH NULL CHILDREN
-      currentNode <- root
       chars <- KEYS FROM code
       FOR c IN chars:
+        currentNode <- root
         bs <- LOOKUP c IN code
         FOR b IN bs:
           IF b = false:
             IF b = LAST ELEMENT IN bs:
               currentNode.left = NEW LEAF NODE LABELLED BY c
-              currentNode <- root
-            ELSE:
-              IF currentNode.left = null:
-                currentNode.left = NEW BRANCH NODE WITH NULL CHILDREN
-              ENDIF
-              currentNode <- currentNode.left
+            ELSIF currentNode.left = null:
+              currentNode.left = NEW BRANCH NODE WITH NULL CHILDREN
             ENDIF
+            currentNode <- currentNode.left
           ELSIF b = true:
             -- same logic but operating on right child
           ENDIF
@@ -183,7 +180,7 @@ of the tree and return the result.
       ENDFOR
       return root
     END 
-    ``` 
+    ```  
 8. Finally, implement the `decode` method in the `Huffman` class. First, reconstruct the tree using the `treeFromCode`
  method. Then take one boolean at a time from the data and use it to traverse the tree by going left for `false`, right 
  for `true`. Every time you reach a leaf you have decoded a single character (the label of the leaf). Add it to the 
