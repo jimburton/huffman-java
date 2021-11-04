@@ -18,7 +18,7 @@ public class PQueue {
 
     /**
      * Add a node to the queue. The new node should be inserted at the point where the frequency of next node is
-     * greater than or equal to that of the next one.
+     * greater than or equal to that of the new one.
      * @param n The node to enqueue.
      */
     public void enqueue(Node n) {
