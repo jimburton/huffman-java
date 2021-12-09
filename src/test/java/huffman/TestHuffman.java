@@ -25,11 +25,11 @@ public class TestHuffman {
         pq.enqueue(new Leaf('b', 1));
         pq.enqueue(new Leaf('c', 101));
         pq.enqueue(new Leaf('d', -101));
-        assertEquals(pq.size(), 4);
-        assertEquals(pq.dequeue().getFreq(), -101);
-        assertEquals(pq.dequeue().getFreq(), 1);
-        assertEquals(pq.dequeue().getFreq(), 42);
-        assertEquals(pq.dequeue().getFreq(), 101);
+        assertEquals(4, pq.size());
+        assertEquals(-101, pq.dequeue().getFreq());
+        assertEquals(1, pq.dequeue().getFreq());
+        assertEquals(42, pq.dequeue().getFreq());
+        assertEquals(101, pq.dequeue().getFreq());
     }
 
     @Test
@@ -46,8 +46,8 @@ public class TestHuffman {
         for(int i=0;i<input.length();i++) {
             assertTrue(hc.containsKey(input.charAt(i)));
         }
-        assertEquals((long) hc.get('I'), 2);
-        assertEquals((long) hc.get('d'), 5);
+        assertEquals(2, (long) hc.get('I'));
+        assertEquals(5, (long) hc.get('d'));
     }
 
     @Test
@@ -55,15 +55,15 @@ public class TestHuffman {
         assertNull(Huffman.treeFromFreqTable(Huffman.freqTable("")));
         // get a list of the unique chars in the input string
         Node t = Huffman.treeFromFreqTable(Huffman.freqTable("a"));
-        assertEquals(t.getFreq(), 1);
+        assertEquals(1, t.getFreq());
         assertTrue(t instanceof Leaf);
 
         t = Huffman.treeFromFreqTable(Huffman.freqTable("aaaabaac"));
-        assertEquals(t.getFreq(), 8);
+        assertEquals(8, t.getFreq());
         // the frequency of the right child should be greater than or equal to the
         // frequency of the left child.
-        assertEquals(((Branch)t).getLeft().getFreq(), 2); // 'b' and 'c'
-        assertEquals(((Branch)t).getRight().getFreq(), 6); // 'a'
+        assertEquals(2, ((Branch)t).getLeft().getFreq()); // 'b' and 'c'
+        assertEquals(6, ((Branch)t).getRight().getFreq()); // 'a'
     }
 
     @Test
